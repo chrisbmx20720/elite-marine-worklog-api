@@ -3,31 +3,28 @@ const cors = require("cors");
 
 const reportRoutes = require("./routes/reportRoutes");
 
+console.log("reportRoutes:", reportRoutes);
+console.log("typeof reportRoutes:", typeof reportRoutes);
+
 const app = express();
 
-// CORS
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173"
-      // Aquí posteriormente agregaremos
-      // el dominio de tu frontend en Vercel
-    ]
-  })
-);
+const PORT = process.env.PORT || 5000;
 
-// Parse JSON
+app.use(cors());
 app.use(express.json());
 
-// Test route
 app.get("/", (req, res) => {
   res.json({
-    message: "Elite Marine Stabilizers API is running",
-    status: "online"
+    message: "Elite Marine Stabilizers API is running"
   });
 });
 
-// Report routes
 app.use("/api/reports", reportRoutes);
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;
