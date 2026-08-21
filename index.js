@@ -1,25 +1,20 @@
 const express = require("express");
 const cors = require("cors");
-
-const reportRoutes = require("./routes/reportRoutes");
-
-console.log("reportRoutes:", reportRoutes);
-console.log("typeof reportRoutes:", typeof reportRoutes);
+require("dotenv").config();
 
 const app = express();
-
-const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Elite Marine Stabilizers API is running"
+    message: "Elite Marine Stabilizers API is running",
+    status: "online"
   });
 });
 
-app.use("/api/reports", reportRoutes);
+const PORT = process.env.PORT || 5000;
 
 if (require.main === module) {
   app.listen(PORT, () => {
